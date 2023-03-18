@@ -2,16 +2,12 @@ const qrcode = require('qrcode-terminal');
 const { Client } = require('whatsapp-web.js');
 const client = new Client();
 
-//For testing only
-OPENAI_API_KEY='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';
-
-
 
 //OpenAI Configuration
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-    apiKey: OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -50,14 +46,13 @@ try {
 
     client.on('ready', async () => {
         console.log('Client is ready!');
-        //client.sendMessage("244927312733@c.us", "hello");
     });
 
     client.on('message', message => {
 
        (async () => {
         if(!(message.broadcast || message.isStatus || message.author !== undefined)) {
-            console.log(`${message.from} : ${message.body}`);
+        //    console.log(`${message.from} : ${message.body}`);
             client.sendMessage(message.from, await getGPTResponse(message.body));
            
         }
