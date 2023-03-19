@@ -1,5 +1,9 @@
+import { config } from 'dotenv';
+config();
+
+
 //OpenAI Configuration
-const { Configuration, OpenAIApi } = require("openai");
+import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -8,7 +12,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 //Querying from Davinci 
-export async function getGPTResponse(prompt) {
+export const getGPTResponse = async (prompt) => {
     const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: `${prompt}`,
